@@ -123,8 +123,32 @@ class UserServiceTest {
 		roles.add(creatRole(2));
 
 		dto.setName("Prueba");
-		dto.setUsername("Pruebita");
+		dto.setUsername("Pruebita2");
 		dto.setEmail("guy.stark@company.net"); // USED EMAIL
+		dto.setLastName("Test");
+		dto.setRoles(roles);
+
+		var response = this.userService.create(dto);
+		assertNotNull(response);
+		assertEquals(406, response.getHeader().getCode());
+		assertNull(response.getBody());
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.axity.office.service.impl.UserServiceImpl#create(com.axity.office.commons.dto.UserDto)}.
+	 */
+	@Test
+	void testVerifyExistUsername() {
+		var dto = new UserDto();
+		var roles = new ArrayList<RoleDto>();
+
+		roles.add(creatRole(1));
+		roles.add(creatRole(2));
+
+		dto.setName("Prueba");
+		dto.setUsername("ezekiel.farmer"); // USED USERNAME
+		dto.setEmail("someEmail2@company.net");
 		dto.setLastName("Test");
 		dto.setRoles(roles);
 

@@ -89,6 +89,12 @@ public class UserServiceImpl implements UserService {
 			return genericResponseDto;
 		}
 
+		if (userPersistence.findByUsername(dto.getUsername()).isPresent()) {
+			GenericResponseDto<UserDto> genericResponseDto = new GenericResponseDto<>();
+			genericResponseDto.setHeader(new HeaderDto(406, "Error nombre de usuario en uso."));
+			return genericResponseDto;
+		}
+
 		UserDO entity = new UserDO();
 		this.mapper.map(dto, entity);
 		entity.setId(null);
