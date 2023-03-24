@@ -89,7 +89,6 @@ class UserServiceTest {
 	 * {@link com.axity.office.service.impl.UserServiceImpl#create(com.axity.office.commons.dto.UserDto)}.
 	 */
 	@Test
-	// @Disabled("TODO: Actualizar la prueba de acuerdo a la entidad")
 	void testCreate() {
 		var dto = new UserDto();
 		var roles = new ArrayList<RoleDto>();
@@ -109,6 +108,30 @@ class UserServiceTest {
 		assertNotNull(response.getBody());
 
 		this.userService.delete(dto.getId());
+	}
+
+	/**
+	 * Test method for
+	 * {@link com.axity.office.service.impl.UserServiceImpl#create(com.axity.office.commons.dto.UserDto)}.
+	 */
+	@Test
+	void testVerifyExistEmail() {
+		var dto = new UserDto();
+		var roles = new ArrayList<RoleDto>();
+
+		roles.add(creatRole(1));
+		roles.add(creatRole(2));
+
+		dto.setName("Prueba");
+		dto.setUsername("Pruebita");
+		dto.setEmail("guy.stark@company.net"); // USED EMAIL
+		dto.setLastName("Test");
+		dto.setRoles(roles);
+
+		var response = this.userService.create(dto);
+		assertNotNull(response);
+		assertEquals(406, response.getHeader().getCode());
+		assertNull(response.getBody());
 	}
 
 	/**

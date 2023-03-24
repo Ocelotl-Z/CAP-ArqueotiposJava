@@ -14,6 +14,7 @@ import com.axity.office.commons.enums.ErrorCode;
 import com.axity.office.commons.exception.BusinessException;
 import com.axity.office.commons.request.PaginatedRequestDto;
 import com.axity.office.commons.response.GenericResponseDto;
+import com.axity.office.commons.response.HeaderDto;
 import com.axity.office.commons.response.PaginatedResponseDto;
 import com.axity.office.model.RoleDO;
 import com.axity.office.model.UserDO;
@@ -81,6 +82,12 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public GenericResponseDto<UserDto> create(UserDto dto) {
+
+		if (userPersistence.findByEmail(dto.getEmail()).isPresent()) {
+			GenericResponseDto<UserDto> genericResponseDto = new GenericResponseDto<>();
+			genericResponseDto.setHeader(new HeaderDto(406, "Error correo en uso."));
+			return genericResponseDto;
+		}
 
 		UserDO entity = new UserDO();
 		this.mapper.map(dto, entity);
