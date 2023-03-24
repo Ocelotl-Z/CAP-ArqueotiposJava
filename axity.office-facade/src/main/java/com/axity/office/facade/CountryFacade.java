@@ -1,13 +1,9 @@
 package com.axity.office.facade;
 
-import java.util.List;
-
 import com.axity.office.commons.dto.CountryDto;
 import com.axity.office.commons.request.PaginatedRequestDto;
 import com.axity.office.commons.response.GenericResponseDto;
 import com.axity.office.commons.response.PaginatedResponseDto;
-
-import graphql.schema.DataFetchingEnvironment;
 
 /**
  * Interface CountryFacade

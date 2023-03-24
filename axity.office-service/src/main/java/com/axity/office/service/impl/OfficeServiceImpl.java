@@ -1,11 +1,5 @@
 package com.axity.office.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,20 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.axity.office.commons.dto.OfficeDto;
 import com.axity.office.commons.enums.ErrorCode;
 import com.axity.office.commons.exception.BusinessException;
-import com.axity.office.commons.request.MessageDto;
 import com.axity.office.commons.request.PaginatedRequestDto;
 import com.axity.office.commons.response.GenericResponseDto;
 import com.axity.office.commons.response.PaginatedResponseDto;
 import com.axity.office.model.OfficeDO;
-import com.axity.office.model.QOfficeDO;
 import com.axity.office.persistence.OfficePersistence;
 import com.axity.office.service.OfficeService;
 import com.github.dozermapper.core.Mapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.Predicate;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**

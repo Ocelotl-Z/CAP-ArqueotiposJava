@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -31,7 +30,6 @@ public class UserDto implements Serializable
   private  String username;
   
   @Schema(required = true, description = "The email")
-  @JsonIgnore
   private  String email;
   
   @Schema(required = true, description = "The name")

@@ -1,7 +1,5 @@
 package com.axity.office.service;
 
-import java.util.List;
-
 import com.axity.office.commons.dto.RoleDto;
 import com.axity.office.commons.request.PaginatedRequestDto;
 import com.axity.office.commons.response.GenericResponseDto;
