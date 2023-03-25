@@ -1,6 +1,7 @@
 package com.axity.office.service.impl;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -83,15 +84,32 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public GenericResponseDto<UserDto> create(UserDto dto) {
 
+		GenericResponseDto<UserDto> genericResponseDto = new GenericResponseDto<>();
+
 		if (userPersistence.findByEmail(dto.getEmail()).isPresent()) {
-			GenericResponseDto<UserDto> genericResponseDto = new GenericResponseDto<>();
+
 			genericResponseDto.setHeader(new HeaderDto(406, "Error correo en uso."));
 			return genericResponseDto;
 		}
 
 		if (userPersistence.findByUsername(dto.getUsername()).isPresent()) {
-			GenericResponseDto<UserDto> genericResponseDto = new GenericResponseDto<>();
 			genericResponseDto.setHeader(new HeaderDto(406, "Error nombre de usuario en uso."));
+			return genericResponseDto;
+		}
+
+		if (dto.getRoles().isEmpty()) {
+			genericResponseDto.setHeader(new HeaderDto(406, "Favor de elegir un rol como minimo."));
+			return genericResponseDto;
+		}
+
+		AtomicBoolean invalidRol = new AtomicBoolean(false);
+
+		dto.getRoles().stream().forEach(r -> {
+			invalidRol.set(rolePersistence.existsById(r.getId()) ? false : true);
+		});
+
+		if (invalidRol.get()) {
+			genericResponseDto.setHeader(new HeaderDto(406, "Favor de elegir un rol valido."));
 			return genericResponseDto;
 		}
 

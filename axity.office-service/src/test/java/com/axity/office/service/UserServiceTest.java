@@ -159,6 +159,30 @@ class UserServiceTest {
 	}
 
 	/**
+	 * Test method for
+	 * {@link com.axity.office.service.impl.UserServiceImpl#create(com.axity.office.commons.dto.UserDto)}.
+	 */
+	@Test
+	void testVerifySelectedRoles() {
+		var dto = new UserDto();
+		var roles = new ArrayList<RoleDto>();
+
+		roles.add(creatRole(2));
+		roles.add(creatRole(5)); // NOT A VALID ROL
+
+		dto.setName("Prueba");
+		dto.setUsername("Pruebita3");
+		dto.setEmail("someEmail3@company.net");
+		dto.setLastName("Test");
+		dto.setRoles(roles);
+
+		var response = this.userService.create(dto);
+		assertNotNull(response);
+		assertEquals(406, response.getHeader().getCode());
+		assertNull(response.getBody());
+	}
+
+	/**
 	 * Method to validate update
 	 */
 	@Test
