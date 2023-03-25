@@ -87,7 +87,6 @@ public class UserServiceImpl implements UserService {
 		GenericResponseDto<UserDto> genericResponseDto = new GenericResponseDto<>();
 
 		if (userPersistence.findByEmail(dto.getEmail()).isPresent()) {
-
 			genericResponseDto.setHeader(new HeaderDto(406, "Error correo en uso."));
 			return genericResponseDto;
 		}
@@ -97,6 +96,13 @@ public class UserServiceImpl implements UserService {
 			return genericResponseDto;
 		}
 
+		// Verify if UserDto have roles exists
+		if (dto.getRoles() == null) {
+			genericResponseDto.setHeader(new HeaderDto(406, "Favor de elegir un rol como minimo."));
+			return genericResponseDto;
+		}
+
+		// Verify if UserDto roles is not empty
 		if (dto.getRoles().isEmpty()) {
 			genericResponseDto.setHeader(new HeaderDto(406, "Favor de elegir un rol como minimo."));
 			return genericResponseDto;
