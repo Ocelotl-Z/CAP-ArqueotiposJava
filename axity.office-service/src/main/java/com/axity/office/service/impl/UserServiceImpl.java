@@ -96,14 +96,8 @@ public class UserServiceImpl implements UserService {
 			return genericResponseDto;
 		}
 
-		// Verify if UserDto have roles exists
-		if (dto.getRoles() == null) {
-			genericResponseDto.setHeader(new HeaderDto(406, "Favor de elegir un rol como minimo."));
-			return genericResponseDto;
-		}
-
-		// Verify if UserDto roles is not empty
-		if (dto.getRoles().isEmpty()) {
+		// Verify if UserDto have roles not exist or is empty
+		if (dto.getRoles() == null || dto.getRoles().isEmpty()) {
 			genericResponseDto.setHeader(new HeaderDto(406, "Favor de elegir un rol como minimo."));
 			return genericResponseDto;
 		}
@@ -111,7 +105,9 @@ public class UserServiceImpl implements UserService {
 		AtomicBoolean invalidRol = new AtomicBoolean(false);
 
 		dto.getRoles().stream().forEach(r -> {
-			invalidRol.set(rolePersistence.existsById(r.getId()) ? false : true);
+			if (!rolePersistence.existsById(r.getId())) {
+				invalidRol.set(true);
+			}
 		});
 
 		if (invalidRol.get()) {

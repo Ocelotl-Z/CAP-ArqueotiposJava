@@ -169,6 +169,8 @@ class UserServiceTest {
 
 		roles.add(creatRole(2));
 		roles.add(creatRole(5)); // NOT A VALID ROL
+		roles.add(creatRole(15)); // NOT A VALID ROL
+		roles.add(creatRole(1));
 
 		dto.setName("Prueba");
 		dto.setUsername("Pruebita3");
@@ -201,7 +203,6 @@ class UserServiceTest {
 		assertEquals(406, response.getHeader().getCode());
 		assertNull(response.getBody());
 	}
-
 
 	/**
 	 * Method to validate update
